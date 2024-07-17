@@ -49,6 +49,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
     if (!isLoading && !isError && products != null) {
       content = GridView.builder(
+        padding: const EdgeInsets.only(bottom: 32),
         itemCount: products!.length,
         gridDelegate:
             const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),

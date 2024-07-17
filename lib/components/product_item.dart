@@ -22,14 +22,24 @@ class ProductItem extends StatelessWidget {
         color: Colors.white,
         child: Column(
           children: [
-            Image.network(
-              product.imageUrl,
-              height: 130,
-              width: double.infinity,
+            Hero(
+              tag: product.id,
+              child: Image.network(
+                product.imageUrl,
+                height: 125,
+                width: double.infinity,
+              ),
             ),
-            Text(
-              product.title,
-              style: const TextStyle(overflow: TextOverflow.ellipsis),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                maxLines: 2,
+                product.title,
+                style: const TextStyle(
+                  overflow: TextOverflow.ellipsis,
+                  fontSize: 12,
+                ),
+              ),
             ),
           ],
         ),
