@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:ecommerce_app/components/cart_item.dart';
 import 'package:ecommerce_app/repo/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/models/cart.dart';
@@ -53,7 +54,10 @@ class _CartScreenState extends State<CartScreen> {
       content = ListView.builder(
         itemCount: cartItems.length,
         itemBuilder: (context, index) {
-          return const Placeholder();
+          return CartItem(
+            cartItem: cartItems[index],
+            key: Key(cartItems[index].productId.toString()),
+          );
         },
       );
     }
