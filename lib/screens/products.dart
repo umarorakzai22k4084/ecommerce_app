@@ -1,7 +1,7 @@
 import 'package:ecommerce_app/components/product_item.dart';
 import 'package:ecommerce_app/repo/products.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerce_app/models/products.dart';
+import 'package:ecommerce_app/models/product.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
@@ -11,7 +11,7 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
-  List<ProductModel>? products = [];
+  List<ProductModel> products = [];
   bool isLoading = false, isError = false;
 
   @override
@@ -26,17 +26,20 @@ class _ProductsScreenState extends State<ProductsScreen> {
       (value) {
         setState(() {
           products = value;
-          if (products == null) {
-            isError = true;
-          }
           isLoading = false;
         });
       },
-    );
+    ).catchError((err) {
+      setState(() {
+        isError = true;
+        isLoading = false;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    //is Loading case
     Widget content = const Center(
       child: CircularProgressIndicator(),
     );
@@ -47,14 +50,14 @@ class _ProductsScreenState extends State<ProductsScreen> {
       );
     }
 
-    if (!isLoading && !isError && products != null) {
+    if (!isLoading && !isError) {
       content = GridView.builder(
         padding: const EdgeInsets.only(bottom: 32),
-        itemCount: products!.length,
+        itemCount: products.length,
         gridDelegate:
             const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (context, index) {
-          return ProductItem(product: products![index]);
+          return ProductItem(product: products[index]);
         },
       );
     }
