@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:ecommerce_app/models/cart.dart';
 import 'package:http/http.dart' as http;
@@ -14,11 +15,10 @@ class CartRepo {
       final cartItemsMap = json.decode(responce.body) as Map<String, dynamic>;
       List<CartItemModel> cartItems = [];
 
-      final productsList =
-          cartItemsMap['products'] as List<Map<String, dynamic>>;
+      final productsList = cartItemsMap['products'] as List;
 
       for (var product in productsList) {
-        cartItems.add(CartItemModel.fromMap(product));
+        cartItems.add(CartItemModel.fromMap(product as Map<String, dynamic>));
       }
 
       return cartItems;

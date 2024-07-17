@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/components/product_item.dart';
 import 'package:ecommerce_app/repo/products.dart';
+import 'package:ecommerce_app/screens/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/models/product.dart';
 
@@ -39,7 +40,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //is Loading case
+    //Loading case
     Widget content = const Center(
       child: CircularProgressIndicator(),
     );
@@ -57,7 +58,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
         gridDelegate:
             const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (context, index) {
-          return ProductItem(product: products[index]);
+          return ProductItem(
+            product: products[index],
+            key: Key(products[index].id.toString()),
+          );
         },
       );
     }
@@ -67,7 +71,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
         title: const Text('Product Screen'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => CartScreen(),
+              ));
+            },
             icon: const Icon(Icons.shopping_basket_outlined),
           )
         ],
